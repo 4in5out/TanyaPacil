@@ -1,0 +1,302 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TanyaPacil — Pak Chill Classroom</title>
+  <link rel="stylesheet" href="{% static 'css/vn.css' %}" />
+</head>
+<body>
+  <main class="vn-viewport">
+    <!-- LAYER 1: ANIMATED CLASSROOM BACKGROUND -->
+    <div class="vn-bg-layer" aria-hidden="true">
+      {% if custom_assets_json %}
+      <script>window.TANYAPACIL_ASSETS = {{ custom_assets_json|safe }};</script>
+      {% endif %}
+
+      <div id="bgContainer" class="classroom-scene">
+        <!-- Default Cozy Golden-Hour Animated Classroom SVG -->
+        <svg class="classroom-svg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice">
+          <defs>
+            <linearGradient id="skyGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#2c3e73" />
+              <stop offset="55%" stop-color="#c4716c" />
+              <stop offset="100%" stop-color="#f6c967" />
+            </linearGradient>
+            <linearGradient id="wallGrad" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stop-color="#242c44" />
+              <stop offset="100%" stop-color="#191f33" />
+            </linearGradient>
+            <linearGradient id="sunGrad" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0%" stop-color="#ffe7a3" stop-opacity="0.55" />
+              <stop offset="100%" stop-color="#ffe7a3" stop-opacity="0" />
+            </linearGradient>
+          </defs>
+
+          <!-- Classroom Back Wall -->
+          <rect width="1440" height="900" fill="url(#wallGrad)" />
+
+          <!-- Tall Left Windows showing golden-hour sky -->
+          <rect x="65" y="110" width="320" height="420" rx="8" fill="url(#skyGrad)" />
+          <g class="cloud-drift" opacity="0.45">
+            <ellipse cx="140" cy="210" rx="58" ry="18" fill="#ffe6c7" />
+            <ellipse cx="260" cy="270" rx="70" ry="20" fill="#ffd9b3" />
+          </g>
+          <!-- Window mullions -->
+          <rect x="65" y="110" width="320" height="420" rx="8" fill="none" stroke="#3e496b" stroke-width="14" />
+          <line x1="225" y1="110" x2="225" y2="530" stroke="#3e496b" stroke-width="10" />
+          <line x1="65" y1="315" x2="385" y2="315" stroke="#3e496b" stroke-width="10" />
+
+          <!-- Classic Green Chalkboard -->
+          <rect x="465" y="125" width="880" height="390" rx="10" fill="#1b3b36" stroke="#7c5638" stroke-width="16" />
+          <rect x="485" y="145" width="840" height="350" fill="none" stroke="rgba(255,255,255,0.06)" stroke-width="2" />
+
+          <!-- Subtle Chalk Python Doodles on Board -->
+          <g fill="rgba(235, 255, 245, 0.24)" font-family="Consolas, monospace" font-size="22">
+            <text x="520" y="205">def belajar_santai(topik):</text>
+            <text x="555" y="240">return f"Paham {topik} bareng Pak Chill!"</text>
+            <text x="520" y="305"># DDP1 — Fasilkom UI</text>
+            <text x="520" y="340">list, tuple, dict, recursion, OOP</text>
+            <text x="1060" y="205">O(n log n)</text>
+            <text x="1040" y="455">&gt;&gt;&gt; print("TanyaPacil")</text>
+          </g>
+
+          <!-- Chalk tray -->
+          <rect x="455" y="518" width="900" height="16" rx="4" fill="#63422a" />
+          <rect x="520" y="510" width="38" height="8" rx="3" fill="#e5e7eb" />
+          <rect x="570" y="510" width="26" height="8" rx="3" fill="#fde68a" />
+
+          <!-- Wooden Wainscoting & Floor -->
+          <rect x="0" y="615" width="1440" height="285" fill="#2a212e" />
+          <line x1="0" y1="615" x2="1440" y2="615" stroke="#49384a" stroke-width="6" />
+
+          <!-- Animated Sunbeams -->
+          <polygon class="sunbeam" points="75,115 385,115 860,900 180,900" fill="url(#sunGrad)" />
+        </svg>
+
+        <!-- Floating Sunlight Dust Motes -->
+        <span class="dust-mote" style="left: 18%; top: 58%; width: 6px; height: 6px; animation-duration: 9s;"></span>
+        <span class="dust-mote" style="left: 28%; top: 44%; width: 4px; height: 4px; animation-duration: 12s; animation-delay: 2s;"></span>
+        <span class="dust-mote" style="left: 42%; top: 62%; width: 5px; height: 5px; animation-duration: 10s; animation-delay: 4s;"></span>
+        <span class="dust-mote" style="left: 60%; top: 48%; width: 4px; height: 4px; animation-duration: 13s; animation-delay: 1s;"></span>
+        <span class="dust-mote" style="left: 74%; top: 55%; width: 5px; height: 5px; animation-duration: 11s; animation-delay: 3s;"></span>
+      </div>
+
+      <div class="vignette"></div>
+    </div>
+
+    <!-- LAYER 2: TOP VISUAL NOVEL HUD -->
+    <header class="vn-hud">
+      <div class="hud-brand">
+        <span class="brand-title">🐼 TanyaPacil</span>
+        <span class="brand-sub">Pak Chill's Coding Classroom</span>
+      </div>
+
+      <nav class="hud-controls" aria-label="Classroom Controls">
+        <button type="button" id="btnToggleBgm" class="hud-btn" title="Toggle Classroom BGM">
+          <span>🎵</span><span class="btn-label">BGM: Off</span>
+        </button>
+        <button type="button" id="btnToggleSfx" class="hud-btn active" title="Toggle Pak Chill Voice Blip">
+          <span>🔊</span><span class="btn-label">Voice: On</span>
+        </button>
+        <button type="button" id="btnOpenBacklog" class="hud-btn" title="Conversation History">
+          <span>📜</span><span class="btn-label">Backlog</span>
+        </button>
+        <button type="button" id="btnOpenResources" class="hud-btn" title="Browse PDFs & External Sources">
+          <span>📚</span><span class="btn-label">Resources</span>
+        </button>
+        <button type="button" id="btnResetChat" class="hud-btn" title="Start New Session">
+          <span>🔄</span><span class="btn-label">New</span>
+        </button>
+        <a href="/admin/" target="_blank" class="hud-btn" title="Upload PDFs & Manage Resources">
+          <span>⚙️</span><span class="btn-label">Admin</span>
+        </a>
+      </nav>
+    </header>
+
+    <!-- LAYER 3: PAK CHILL MASCOT STAGE -->
+    <section class="mascot-stage" aria-label="Pak Chill Mascot">
+      <div id="mascotWrapper" class="mascot-wrapper" data-state="idle">
+        <!-- Built-in Animated 3-State SVG Pak Chill (auto-swaps if custom mascot files are added) -->
+        <svg id="mascotSvg" class="mascot-svg" viewBox="0 0 300 300" role="img" aria-label="Pak Chill the Panda">
+          <!-- Thought Bubble (Visible in THINKING state) -->
+          <g class="thought-bubble">
+            <circle cx="222" cy="84" r="5" fill="#fffdf5" opacity="0.9" />
+            <circle cx="235" cy="68" r="8" fill="#fffdf5" opacity="0.95" />
+            <rect x="218" y="20" width="70" height="40" rx="18" fill="#fffdf5" stroke="#f6c967" stroke-width="2.5" />
+            <circle class="thought-dot-1" cx="239" cy="40" r="4.5" fill="#1f2937" />
+            <circle class="thought-dot-2" cx="253" cy="40" r="4.5" fill="#1f2937" />
+            <circle class="thought-dot-3" cx="267" cy="40" r="4.5" fill="#1f2937" />
+          </g>
+
+          <!-- Sparkles (Visible in ANSWERING state) -->
+          <g class="sparkle-group" fill="#f6c967">
+            <path d="M52 72 L56 82 L66 86 L56 90 L52 100 L48 90 L38 86 L48 82 Z" />
+            <path d="M248 95 L251 102 L258 105 L251 108 L248 115 L245 108 L238 105 L245 102 Z" fill="#5eead4" />
+          </g>
+
+          <g class="panda-body-group">
+            <!-- Ears -->
+            <circle cx="96" cy="82" r="24" fill="#1d2433" />
+            <circle cx="96" cy="82" r="11" fill="#323d54" />
+            <circle cx="204" cy="82" r="24" fill="#1d2433" />
+            <circle cx="204" cy="82" r="11" fill="#323d54" />
+
+            <!-- Cozy Fasilkom Hoodie Torso -->
+            <path d="M74 282 C74 210, 102 184, 150 184 C198 184, 226 210, 226 282 Z" fill="#253659" stroke="#18233a" stroke-width="4" />
+            <!-- Hoodie collar & drawstrings -->
+            <path d="M114 190 Q150 218 186 190" fill="none" stroke="#f6c967" stroke-width="5" stroke-linecap="round" />
+            <line x1="136" y1="205" x2="132" y2="236" stroke="#f6c967" stroke-width="3.5" stroke-linecap="round" />
+            <line x1="164" y1="205" x2="168" y2="236" stroke="#f6c967" stroke-width="3.5" stroke-linecap="round" />
+            <!-- Little bamboo badge on hoodie -->
+            <circle cx="182" cy="236" r="11" fill="#1b3b36" stroke="#5eead4" stroke-width="2" />
+            <text x="182" y="240" text-anchor="middle" font-size="11" fill="#5eead4" font-family="Consolas">&lt;/&gt;</text>
+
+            <!-- Panda Head -->
+            <ellipse cx="150" cy="134" rx="68" ry="58" fill="#f8fafc" stroke="#1d2433" stroke-width="4" />
+
+            <!-- Eye Patches -->
+            <ellipse cx="122" cy="132" rx="20" ry="16" transform="rotate(-14 122 132)" fill="#1d2433" />
+            <ellipse cx="178" cy="132" rx="20" ry="16" transform="rotate(14 178 132)" fill="#1d2433" />
+
+            <!-- Chill Eyes -->
+            <g class="panda-eyes-open">
+              <circle cx="124" cy="131" r="6" fill="#ffffff" />
+              <circle cx="126" cy="130" r="2.2" fill="#1d2433" />
+              <circle cx="176" cy="131" r="6" fill="#ffffff" />
+              <circle cx="178" cy="130" r="2.2" fill="#1d2433" />
+              <!-- Chill half-lids for relaxed vibe -->
+              <path d="M112 125 Q124 122 135 127" stroke="#1d2433" stroke-width="4" fill="none" />
+              <path d="M165 127 Q176 122 188 125" stroke="#1d2433" stroke-width="4" fill="none" />
+            </g>
+
+            <!-- Blush cheeks -->
+            <ellipse cx="104" cy="148" rx="9" ry="5" fill="#fda4af" opacity="0.55" />
+            <ellipse cx="196" cy="148" rx="9" ry="5" fill="#fda4af" opacity="0.55" />
+
+            <!-- Nose -->
+            <ellipse cx="150" cy="146" rx="9" ry="6" fill="#1d2433" />
+
+            <!-- Mouth: IDLE -->
+            <path class="mouth-idle" d="M139 156 Q150 165 161 156" fill="none" stroke="#1d2433" stroke-width="3.5" stroke-linecap="round" />
+
+            <!-- Mouth: THINKING -->
+            <path class="mouth-thinking" d="M142 159 Q150 156 158 159" fill="none" stroke="#1d2433" stroke-width="3.5" stroke-linecap="round" />
+
+            <!-- Mouth: ANSWERING (Animated Talking) -->
+            <ellipse class="mouth-talking" cx="150" cy="160" rx="10" ry="7" fill="#ef4444" stroke="#1d2433" stroke-width="3" />
+
+            <!-- Paws: IDLE (Relaxed with warm coffee/tea mug) -->
+            <g class="paw-idle">
+              <ellipse cx="95" cy="245" rx="20" ry="15" fill="#1d2433" />
+              <ellipse cx="205" cy="245" rx="20" ry="15" fill="#1d2433" />
+            </g>
+
+            <!-- Paws: THINKING (Paw on chin) -->
+            <g class="paw-thinking">
+              <ellipse cx="95" cy="245" rx="20" ry="15" fill="#1d2433" />
+              <ellipse cx="174" cy="184" rx="18" ry="14" transform="rotate(-24 174 184)" fill="#1d2433" />
+            </g>
+
+            <!-- Paws: ANSWERING (Gesturing enthusiastically) -->
+            <g class="paw-answering">
+              <ellipse cx="95" cy="242" rx="20" ry="15" fill="#1d2433" />
+              <ellipse cx="222" cy="204" rx="21" ry="15" transform="rotate(-28 222 204)" fill="#1d2433" />
+            </g>
+          </g>
+        </svg>
+      </div>
+
+      <!-- Quick Starter Prompts (auto-hides once conversation starts) -->
+      <div id="starterChips" class="starter-chips">
+        {% for prompt in starter_prompts %}
+        <button type="button" class="starter-chip" data-prompt="{{ prompt }}">{{ prompt }}</button>
+        {% endfor %}
+      </div>
+    </section>
+
+    <!-- LAYER 4: CUSTOMIZED VISUAL NOVEL DIALOGUE BOX -->
+    <section class="vn-dialogue-dock" aria-label="Dialogue Box">
+      <div class="vn-box">
+        <div class="vn-nameplate-row">
+          <div class="vn-nameplate">🐼 Pak Chill</div>
+          <div id="vnStatePill" class="vn-state-pill" data-state="idle">
+            <span class="state-dot"></span>
+            <span id="vnStateLabel">Chilling</span>
+          </div>
+        </div>
+
+        <div id="vnUserEcho" class="vn-user-echo"></div>
+
+        <div id="vnDialogueScroll" class="vn-dialogue-scroll" title="Click to skip typing animation">
+          <div id="vnDialogueContent"></div>
+        </div>
+
+        <div id="vnCitations" class="vn-citations"></div>
+
+        <form id="vnChatForm" class="vn-input-form" autocomplete="off">
+          <input
+            id="vnChatInput"
+            type="text"
+            class="vn-input"
+            placeholder="Ask Pak Chill about DDP1, Python, PDF modules, or paste an error..."
+            required
+          />
+          <button type="button" id="vnSkipBtn" class="vn-skip-btn">Skip ⏭</button>
+          <button type="submit" id="vnSendBtn" class="vn-send-btn">Ask ↵</button>
+        </form>
+      </div>
+    </section>
+  </main>
+
+  <!-- IN-WINDOW MODAL: CONVERSATION BACKLOG -->
+  <div id="backlogModal" class="vn-modal-backdrop" role="dialog" aria-modal="true" aria-label="Conversation Backlog">
+    <div class="vn-modal">
+      <div class="modal-header">
+        <h2>📜 Classroom Backlog</h2>
+        <button type="button" class="modal-close" data-close-modal>&times;</button>
+      </div>
+      <div id="backlogBody" class="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- IN-WINDOW MODAL: FACULTY CODING RESOURCES -->
+  <div id="resourcesModal" class="vn-modal-backdrop" role="dialog" aria-modal="true" aria-label="Faculty Resources">
+    <div class="vn-modal">
+      <div class="modal-header">
+        <h2>📚 Faculty Coding Resources (PDFs, GFG, W3Schools)</h2>
+        <button type="button" class="modal-close" data-close-modal>&times;</button>
+      </div>
+      <div id="resourcesBody" class="modal-body"></div>
+    </div>
+  </div>
+
+  <!-- Auto-swap background/mascot if user drops custom art into static/assets/ -->
+  <script>
+    (function () {
+      const assets = window.TANYAPACIL_ASSETS || {};
+      const bgContainer = document.getElementById('bgContainer');
+      if (assets.bg_video && bgContainer) {
+        bgContainer.innerHTML = `<video class="vn-bg-media" src="${assets.bg_video}" autoplay loop muted playsinline></video>`;
+      } else if (assets.bg_image && bgContainer) {
+        bgContainer.innerHTML = `<img class="vn-bg-media" src="${assets.bg_image}" alt="Classroom background" />`;
+      }
+
+      if (assets.mascot_idle) {
+        const wrapper = document.getElementById('mascotWrapper');
+        const svg = document.getElementById('mascotSvg');
+        if (svg) svg.remove();
+        const img = document.createElement('img');
+        img.id = 'mascotCustomImg';
+        img.className = 'mascot-custom-img';
+        img.src = assets.mascot_idle;
+        img.alt = 'Pak Chill';
+        wrapper.appendChild(img);
+      }
+    })();
+  </script>
+  <script src="{% static 'js/audio.js' %}"></script>
+  <script src="{% static 'js/vn_app.js' %}"></script>
+</body>
+</html>
