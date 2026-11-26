@@ -77,7 +77,10 @@ def ask_pak_chill(
     )
 
     try:
-        client = genai.Client(api_key=api_key)
+        if api_key.startswith('AQ.'):
+            client = genai.Client(vertexai=True, api_key=api_key)
+        else:
+            client = genai.Client(api_key=api_key)
         response = client.models.generate_content(
             model=settings.GEMINI_MODEL,
             contents=prompt,
